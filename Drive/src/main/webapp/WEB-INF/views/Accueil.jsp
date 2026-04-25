@@ -44,10 +44,11 @@
 
       <div class="column is-3">
         <div class="box has-text-centered">
-          <p class="title is-6">⬆️ Upload</p>
-          <p class="mb-3">Ajouter un nouveau fichier</p>
-          <a class="button is-link is-fullwidth">
-            Envoyer
+          <p class="title is-6">⬆️ Créer un fichier</p>
+          <p class="mb-3">Créer un nouveau fichier</p>
+          <a href="${pageContext.request.contextPath}/Document"
+          	 class="button is-link is-fullwidth">
+            Nouveau
           </a>
         </div>
       </div>
