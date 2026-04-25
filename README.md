@@ -75,7 +75,13 @@ controller/
 - POST :
   - Récupère login/password
   - Appelle `UtilisateurDao.InscriptionUtilisateur()`
-  - Redirige vers Connexion
+  - Redirige vers Connexion  
+
+### 🔹 ControllerDeconnexion
+- GET :
+  - Affiche une page pour confirmer la déconnexion et propose une redirection vers Inscription ou Connexion
+- POST :
+  - Rien 
 
 ---
 
