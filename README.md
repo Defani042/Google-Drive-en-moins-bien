@@ -1,10 +1,92 @@
 # Google-Drive-en-moins-bien
 
-## ORGANISATION 
-le projet possèdes les packages suivants:  
-- **dao** → package pour la gestion de la BDD  
-- **model** → package des classes métier (classe java classique)  
-- **controller** → contient toutes les servelett
+
+## 🏗️ Architecture du projet
+
+## 📦 MODEL
+
+```
+model/
+└── Utilisateur.java
+```
+
+👉 Contient les objets métier de l’application.
+
+- Représente un utilisateur
+- Attributs : id, login, password
+- Aucune logique SQL
+
+---
+
+## 🗄️ DAO (Data Access Object)
+
+```
+dao/
+├── ParamBD.java
+└── UtilisateurDao.java
+```
+
+👉 Gère la communication avec la base de données.
+
+### 🔹 ParamBD.java
+- Charge la configuration JDBC depuis `web.xml`
+- Initialise les paramètres de connexion :
+  - URL de la base
+  - login
+  - password
+  - driver
+
+### 🔹 UtilisateurDao.java
+- `InscriptionUtilisateur(login, password)` → INSERT en base
+- `seConnecter(login, password)` → SELECT en base
+- Contient toute la logique SQL
+
+---
+
+## 🎮 CONTROLLER
+
+```
+controller/
+├── ControllerAccueil.java
+├── ControllerConnexion.java
+└── ControllerInscription.java
+```
+
+👉 Gère les requêtes HTTP (Servlets)
+
+### 🔹 ControllerAccueil
+- GET :
+  - Vérifie la session utilisateur
+  - Redirige vers login si non connecté
+  - Sinon affiche Accueil.jsp
+
+### 🔹 ControllerConnexion
+- GET :
+  - Affiche le formulaire de connexion
+- POST :
+  - Récupère login/password
+  - Appelle `UtilisateurDao.seConnecter()`
+  - Stocke l’utilisateur en session
+  - Redirige vers Accueil
+
+### 🔹 ControllerInscription
+- GET :
+  - Affiche le formulaire d’inscription
+- POST :
+  - Récupère login/password
+  - Appelle `UtilisateurDao.InscriptionUtilisateur()`
+  - Redirige vers Connexion
+
+---
+
+
+# 📌 Résumé MVC
+
+| Couche | Rôle |
+|--------|------|
+| MODEL | représente les données |
+| DAO | gère la base de données |
+| CONTROLLER | gère les requêtes HTTP |
 
 ## BASE DE DONNEES
 
