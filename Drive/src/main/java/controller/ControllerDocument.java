@@ -31,7 +31,7 @@ public class ControllerDocument extends HttpServlet {
 			//redirection vers le controler d'inscription
 			rd = request.getRequestDispatcher("/WEB-INF/views/Connexion.jsp");
 		}
-		
+		DocumentDao dao = new DocumentDao();
 		Document doc;
 		// récupérer id du document
 		 String idParam = request.getParameter("id");
@@ -40,14 +40,14 @@ public class ControllerDocument extends HttpServlet {
 	        doc = new Document();
 	        doc.setTitre("Nouveau document");
 	        doc.setContenu("");
-
+	        dao.creerDocument("Nouveau Doc","",u.getId());
 	    }
 	    // CAS 2 : document existant
 	    else {
 
 	        int id = Integer.parseInt(idParam);
 
-	        DocumentDao dao = new DocumentDao();
+	        
 	        doc = dao.getDocument(id);
 	    }
 
@@ -60,8 +60,22 @@ public class ControllerDocument extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	    HttpSession session = request.getSession();
+	    Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
+	    // check si utilisateur est null
+	    if (u == null) {
+	        response.sendRedirect("Connexion");
+	        return;
+	    }
+	    //récupération de l'id du doc + contenue
+	    int id = Integer.parseInt(request.getParameter("id"));
+	    String contenu = request.getParameter("contenu");
+	    //save du document
+	    DocumentDao dao = new DocumentDao();
+	    dao.sauvegarderDocument(id, contenu);
+
+	    // redirection vers le document
+	    response.sendRedirect("Document?id=" + id);
 	}
 
 }
