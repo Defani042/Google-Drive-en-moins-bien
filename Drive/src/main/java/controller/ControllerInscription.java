@@ -1,13 +1,17 @@
 package controller;
 
-import model.Utilisateur;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Utilisateur;
+
 import java.io.IOException;
+
+import dao.ParamBD;
+import dao.UtilisateurDao;
 
 @WebServlet("/Inscription")
 public class ControllerInscription extends HttpServlet {
@@ -20,8 +24,17 @@ public class ControllerInscription extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//récupération des données du forlulaire
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
+		//création de l'utilisateur 
+        UtilisateurDao dao = new UtilisateurDao();
+        dao.InscriptionUtilisateur(login, password);
+        // redirection login
+        response.sendRedirect(request.getContextPath() + "/Connexion");
+	}
+	public void init() {
+		ParamBD.init(getServletContext());
 	}
 
 }

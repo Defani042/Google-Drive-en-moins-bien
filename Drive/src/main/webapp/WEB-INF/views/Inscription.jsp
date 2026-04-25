@@ -11,7 +11,7 @@
         <div class="box">
           <h1 class="title has-text-centered">Creer un Nouveau Compte</h1>
 
-          <form method="post">
+          <form method="post" action="${pageContext.request.contextPath}/Inscription">
             
             <div class="field">
               <label class="label">Login</label>

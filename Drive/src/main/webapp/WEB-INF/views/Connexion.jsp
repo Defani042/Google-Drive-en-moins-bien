@@ -12,7 +12,7 @@
         <div class="box">
           <h1 class="title has-text-centered">Connexion</h1>
 
-          <form action="${pageContext.request.contextPath}/login" method="post">
+          <form method="post" action="${pageContext.request.contextPath}/Connexion">
 
             <!-- LOGIN -->
             <div class="field">

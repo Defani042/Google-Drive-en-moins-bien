@@ -7,7 +7,7 @@ public class ParamBD {
 	protected static String bdLogin;
 	protected static String bdPassword;
 	
-	protected static void init(ServletContext context) {
+	public static void init(ServletContext context) {
 		try {
 			Class.forName(context.getInitParameter("JDBC_DRIVER"));
 			bdURL = context.getInitParameter("JDBC_URL");
