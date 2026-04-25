@@ -1,0 +1,13 @@
+!SESSION 2026-04-23 12:18:13.087 -----------------------------------------------
+eclipse.buildId=4.38.0.20251204-0849
+java.version=21.0.10
+java.vendor=Debian
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=fr_FR
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-23 12:18:14.707
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-23 12:18:36.350
+!MESSAGE Logback config file: /home/adrien/Documents/S6/DW/Projet /Google-Drive-en-moins-bien/Drive/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml

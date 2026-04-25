@@ -1,4 +1,5 @@
 package controller;
+
 import model.Utilisateur;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -6,26 +7,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
-@WebServlet("/Accueil")
-public class ControllerAccueil extends HttpServlet {
+@WebServlet("/Inscription")
+public class ControllerInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
-    
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// récupération de l'utilisateur dans la variable de session
-		HttpSession session = request.getSession();
-		Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/Accueil.jsp");
-		//si utilisateur null redirection vers Connexion
-		if(u == null) {
-			//redirection vers le controler d'inscription
-			rd = request.getRequestDispatcher("/WEB-INF/views/Connexion.jsp");
-		}
-		//sinon page d'acceuille
+		// TODO Auto-generated method stub
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/Inscription.jsp");
 		rd.forward(request, response);
 	}
 
