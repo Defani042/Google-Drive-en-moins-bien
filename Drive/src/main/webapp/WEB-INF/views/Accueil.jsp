@@ -36,7 +36,8 @@
 	        <div class="box has-text-centered">
 	          <p class="title is-6">📁 Mes fichiers</p>
 	          <p class="mb-3">Accéder à vos documents</p>
-	          <a class="button is-primary is-fullwidth">
+	          <a href="${pageContext.request.contextPath}/ListeDocument"
+	          	 class="button is-primary is-fullwidth">
 	            Ouvrir
 	          </a>
 	        </div>
