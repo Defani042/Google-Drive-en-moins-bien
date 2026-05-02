@@ -14,7 +14,7 @@
 	    <div id="editor" style="height: 400px; border: 1px solid #ccc;"></div>
 	
 	    <!-- CONTENU INITIAL -->
-	    <textarea id="docContent" hidden>${doc.contenu}</textarea>
+	    <textarea id="docContent">${doc.contenu}</textarea>
 	
 	    <!-- FORMULAIRE SAUVEGARDE -->
 	    <form method="post" action="${pageContext.request.contextPath}/Document">

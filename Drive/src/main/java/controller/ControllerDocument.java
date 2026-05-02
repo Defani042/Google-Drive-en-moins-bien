@@ -34,7 +34,7 @@ public class ControllerDocument extends HttpServlet {
 		DocumentDao dao = new DocumentDao();
 		Document doc;
 		// récupérer id du document
-		 String idParam = request.getParameter("id");
+		String idParam = request.getParameter("id");
 		// CAS 1 : nouveau document
 	    if (idParam == null || idParam.isEmpty()) {
 	        doc = new Document();
