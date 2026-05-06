@@ -51,21 +51,35 @@ public class ControllerDocument extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
+	    String action = request.getParameter("action");
 	    Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
 	    // check si utilisateur est null
 	    if (u == null) {
 	        response.sendRedirect("Connexion");
 	        return;
 	    }
-	    //récupération de l'id du doc + contenue
-	    int id = Integer.parseInt(request.getParameter("id"));
-	    String contenu = request.getParameter("contenu");
-	    //save du document
-	    DocumentDao dao = new DocumentDao();
-	    dao.sauvegarderDocument(id, contenu);
-
-	    // redirection vers le document
-	    response.sendRedirect("Document?id=" + id);
+	    
+		    if ("save".equals(action)) {
+			    //récupération de l'id du doc + contenue
+			    int id = Integer.parseInt(request.getParameter("id"));
+			    String contenu = request.getParameter("contenu");
+			    //save du document
+			    DocumentDao dao = new DocumentDao();
+			    dao.sauvegarderDocument(id, contenu);
+			    System.out.println("contenu=[" + contenu + "]");
+			    // redirection vers le document
+			    response.sendRedirect("Document?id=" + id);
+		    }
+		    
+		    if ("titre".equals(action)) {
+		    	int id = Integer.parseInt(request.getParameter("id"));
+		    	String nouveauTitre = request.getParameter("titre");
+		    	DocumentDao dao = new DocumentDao();
+		    	dao.changerTitre(id, nouveauTitre);
+		    	
+		    	// redirection vers le document
+			    response.sendRedirect("Document?id=" + id);
+		    }
 	}
 
 }

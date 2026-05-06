@@ -1,16 +1,26 @@
+//attendre que la page soit prête
 document.addEventListener("DOMContentLoaded", () => {
-
+	
+	//création de l'éditeur de texte
     const quill = new Quill('#editor', {
         theme: 'snow'
     });
-
-    // charger contenu existant
-    const content = document.getElementById("docContent").value;
+	
+	//récupération du contenu
+    const content = document.getElementById("docContent").value || "";
     quill.root.innerHTML = content;
-
-    // sauvegarde
-    document.querySelector("form").addEventListener("submit", () => {
-        document.getElementById("hiddenContent").value = quill.root.innerHTML;
-    });
+	
+	//récupère le bon formulaire 
+    const saveForm = document.querySelector("form[name='save']");
+	
+	//listener pour envoyer le contenu du document
+	saveForm.addEventListener("submit", (e) => {
+		
+		//récupération du contenu
+	    const content = quill.root.innerHTML;
+		
+		//met le contenu dans le champs hidden
+	    document.getElementById("hiddenContent").value = content;
+	});
 
 });

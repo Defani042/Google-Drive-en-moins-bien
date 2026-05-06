@@ -34,6 +34,12 @@ public class ControllerConnexion extends HttpServlet {
         UtilisateurDao dao = new UtilisateurDao();
         Utilisateur u = dao.seConnecter(login, password);
         //stockage dans les var de session
+        if(u == null) {
+        	HttpSession session = request.getSession();
+            session.setAttribute("erreur", 1);
+        	response.sendRedirect(request.getContextPath() + "/Connexion");
+        	return;
+        }
         HttpSession session = request.getSession();
         session.setAttribute("utilisateur", u);
         response.sendRedirect(request.getContextPath() + "/Accueil");

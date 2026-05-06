@@ -96,6 +96,27 @@ public class DocumentDao {
 	        e.printStackTrace();
 	    }
 	}
+	//fonction de changement de titre
+	public void changerTitre(int id, String nouveauTitre) {
+	    try {
+	    	//conection a la BDD
+	        Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
+	        //requete sql
+	        String sql = "UPDATE document SET titre = ? WHERE id = ?";
+	        PreparedStatement pst = conn.prepareStatement(sql);
+	        //argument de la requette
+	        pst.setString(1, nouveauTitre);
+	        pst.setInt(2, id);
+	        //exécution de la requette 
+	        pst.executeUpdate();
+	        // fermeuture
+	        pst.close();
+	        conn.close();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	//fonction de récupération de la liste des Document d'un utilisateur 
 	public LinkedList<Document> getDocumentsByUser(int userId) {
 

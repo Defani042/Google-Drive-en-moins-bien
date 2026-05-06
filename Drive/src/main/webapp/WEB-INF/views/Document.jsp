@@ -6,8 +6,16 @@
 	<section class="section">
 	  <div class="container">
 	
-	    <!-- TITRE -->
-	    <h1 class="title">${doc.titre}</h1>
+	    <!-- FORMULAIRE TITRE -->
+	     <form method="post" name="titre" action="${pageContext.request.contextPath}/Document">
+	    	<!-- <h1 class="title">${doc.titre}</h1> -->
+	    	<input class ="title "type="text" name="titre" value="${doc.titre}" style="background-color: transparent;">
+	    	<input type="hidden" name="action" value="titre">
+	    	<input type="hidden" name="id" value="${doc.id}">
+	        <button class="button is-primary" type="submit">
+	            🖊️ Modifier
+	        </button>
+	    </form>
 	
 	    <!-- EDITEUR -->
 	    <div id="editor" style="height: 400px; border: 1px solid #ccc;"></div>
@@ -16,9 +24,10 @@
 	    <textarea id="docContent"style="display:none;">${doc.contenu}</textarea>
 	
 	    <!-- FORMULAIRE SAUVEGARDE -->
-	    <form method="post" action="${pageContext.request.contextPath}/Document">
+	    <form method="post" name="save" action="${pageContext.request.contextPath}/Document">
 	
 	        <input type="hidden" name="contenu" id="hiddenContent">
+	        <input type="hidden" name="action" value="save">
 	        <input type="hidden" name="id" value="${doc.id}">
 	
 	        <div class="mt-4">

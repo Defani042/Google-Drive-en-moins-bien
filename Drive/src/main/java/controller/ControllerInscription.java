@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -30,6 +31,8 @@ public class ControllerInscription extends HttpServlet {
         UtilisateurDao dao = new UtilisateurDao();
         dao.InscriptionUtilisateur(login, password);
         // redirection login
+        HttpSession session = request.getSession();
+        session.setAttribute("erreur", 0);
         response.sendRedirect(request.getContextPath() + "/Connexion");
 	}
 	public void init() {

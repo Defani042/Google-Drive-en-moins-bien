@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/Header.jsp">
 	<jsp:param name="titre" value="connexion"/>
 </jsp:include>
@@ -46,7 +46,13 @@
               Créer un compte
             </a>
           </p>
-
+			<c:if test="${sessionScope.erreur == 1}">
+  
+		  	<div class="notification is-danger has-text-centered">
+		    Login ou mot de passe incorect
+		  	</div>
+		
+		  </c:if>
         </div>
 
       </div>

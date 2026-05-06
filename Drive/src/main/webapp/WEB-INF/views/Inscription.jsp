@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/Header.jsp">
 	<jsp:param name="titre" value="Inscription"/>
 </jsp:include>
@@ -42,6 +43,9 @@
            <!-- LIEN CONNEXION -->
           <p class="has-text-centered">
             Vous avez un compte ?
+            <%
+            session.setAttribute("erreur", 0);
+            %>
             <a href="${pageContext.request.contextPath}/Connexion">
               Se connecter
             </a>
