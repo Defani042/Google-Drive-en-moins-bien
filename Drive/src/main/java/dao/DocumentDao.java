@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 import model.Document;
@@ -13,25 +14,34 @@ import model.Document;
 public class DocumentDao {
 	
 	//fonction de création d'un document dans la BDD
-	public void creerDocument(String titre, String contenu, int userId) {
+	public int creerDocument(String titre, String contenu, int userId) {
+		 int id = -1;
 	    try {
 	    	//conection a la BDD
 	        Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
 	        //requete sql
 	        String sql = "INSERT INTO document (titre, contenu, proprietaire_id) VALUES (?, ?, ?)";
-	        PreparedStatement pst = conn.prepareStatement(sql);
+	        // permet de récupérer l'id 
+	        PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	        //argument de la requette
 	        pst.setString(1, titre);
 	        pst.setString(2, contenu);
 	        pst.setInt(3, userId);
 	        //xécution de la requette 
 	        pst.executeUpdate();
+	        //recupération de l'id du document 
+	        ResultSet rs = pst.getGeneratedKeys();
+	        if (rs.next()) {
+	            id = rs.getInt(1); 
+	        }
 	        // fermeuture 
 	        pst.close();
 	        conn.close();
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	    return id;
 	}
 	//fonction de récupération d'un document 
 	public Document getDocument(int id) {

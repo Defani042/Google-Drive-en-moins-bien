@@ -47,7 +47,7 @@
 	        <div class="box has-text-centered">
 	          <p class="title is-6">⬆️ Créer un fichier</p>
 	          <p class="mb-3">Créer un nouveau fichier</p>
-	          <a href="${pageContext.request.contextPath}/Document"
+	          <a href="${pageContext.request.contextPath}/CreerDocument"
 	          	 class="button is-link is-fullwidth">
 	            Nouveau
 	          </a>

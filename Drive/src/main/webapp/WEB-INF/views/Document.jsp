@@ -3,7 +3,6 @@
 <jsp:include page="/WEB-INF/views/Header.jsp">
 	<jsp:param name="titre" value="Document"/>
 </jsp:include>
-
 	<section class="section">
 	  <div class="container">
 	
@@ -14,7 +13,7 @@
 	    <div id="editor" style="height: 400px; border: 1px solid #ccc;"></div>
 	
 	    <!-- CONTENU INITIAL -->
-	    <textarea id="docContent">${doc.contenu}</textarea>
+	    <textarea id="docContent"style="display:none;">${doc.contenu}</textarea>
 	
 	    <!-- FORMULAIRE SAUVEGARDE -->
 	    <form method="post" action="${pageContext.request.contextPath}/Document">
@@ -32,7 +31,6 @@
 	
 	  </div>
 	</section>
-
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="${pageContext.request.contextPath}/js/editor.js"></script>
 
