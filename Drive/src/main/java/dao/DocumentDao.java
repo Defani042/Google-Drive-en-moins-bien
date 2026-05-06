@@ -134,8 +134,8 @@ public class DocumentDao {
 	        String sql = "DELETE FROM document WHERE id = ? AND proprietaire_id = ?";
 	        PreparedStatement pst = conn.prepareStatement(sql);
 	        //argument de la requette
-	        pst.setInt(1,idDoc);
-	        pst.setInt(2, idU);
+	        pst.setInt(1,idU);
+	        pst.setInt(2, idDoc);
 	        //exécution de la requette 
 	        int rows = pst.executeUpdate();
 	        
@@ -143,6 +143,8 @@ public class DocumentDao {
 	            System.out.println("Document supprimé !");
 	        } else {
 	            System.out.println("Aucun document supprimé (id ou user incorrect)");
+	            System.out.println("Id Utilisateur: "+idU);
+	            System.out.println("Id Document: "+idDoc);
 	        }
 	        // fermeuture
 	        pst.close();

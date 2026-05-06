@@ -9,26 +9,27 @@
 
 <div class="columns is-multiline">
 
-<c:forEach var="doc" items="${documents}">
+<c:forEach var="d" items="${documents}">
     <div class="column is-4">
         <div class="box">
 
             <!-- TITRE -->
             <p class="title is-6 has-text-centered">
-                ${doc.titre}
+                ${d.titre}
             </p>
 
 
             <!-- ACTIONS -->
             <div class="buttons is-centered mt-3">
-                <a href="${pageContext.request.contextPath}/Document?id=${doc.id}"
+                <a href="${pageContext.request.contextPath}/Document?id=${d.id}"
                    class="button is-link is-light">
                     📖 Ouvrir
                 </a>
 
                	<form method="post" action="${pageContext.request.contextPath}/SupprimerDocument">
-   					<input type="hidden" name="id" value="${doc.id}">
-    				<button class="button is-danger is-light">
+   					<input type="hidden" name="id" value="${d.id}">
+    				<button class="button is-danger is-light"
+    				onclick="return confirm('Supprimer ce document ?');">
        						 🗑 Supprimer
     				</button>
 				</form>
