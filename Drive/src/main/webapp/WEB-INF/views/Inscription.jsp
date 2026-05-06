@@ -3,7 +3,6 @@
 <jsp:include page="/WEB-INF/views/Header.jsp">
 	<jsp:param name="titre" value="Inscription"/>
 </jsp:include>
-<section class="section">
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-4">
