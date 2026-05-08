@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import model.Document;
+import model.Utilisateur;
 
 
 public class DocumentDao {
@@ -74,6 +76,64 @@ public class DocumentDao {
 	    }
 
 	    return doc;
+	}
+	public LinkedList<Document> getDocumentsLecture(int userId) {
+
+		LinkedList<Document> docs = new LinkedList<Document>();
+
+	    try  {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
+	    	String sql = "SELECT * FROM document,lecture WHERE id_document = document.id AND id_utilisateur = ?";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+
+	        ps.setInt(1, userId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Document doc = new Document(
+	                rs.getInt("id"),
+	                rs.getString("titre"),
+	                rs.getString("contenu"),
+	                userId
+	            );
+	            docs.add(doc);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return docs;
+	}
+	public LinkedList<Document> getDocumentsEcriture(int userId) {
+
+		LinkedList<Document> docs = new LinkedList<Document>();
+
+	    try  {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
+	    	String sql = "SELECT * FROM document,ecriture WHERE id_document = document.id AND id_utilisateur = ?";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+
+	        ps.setInt(1, userId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Document doc = new Document(
+	                rs.getInt("id"),
+	                rs.getString("titre"),
+	                rs.getString("contenu"),
+	                userId
+	            );
+	            docs.add(doc);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return docs;
 	}
 	//fonction de sauvegarde du contenue 
 	public void sauvegarderDocument(int id, String contenu) {
@@ -176,5 +236,149 @@ public class DocumentDao {
 		 }
 		
 	}
+	public String rechercheTitreAvecID(String id) {
+		String titre = "";
+		System.out.println("idDoc = " + id);
+		try  {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
+	        String sql = "SELECT titre FROM document WHERE id = ?;";
+	        PreparedStatement pst = conn.prepareStatement(sql);
+	        //argument de la requette
+	        pst.setString(1,id);
+	        //exécution de la requette
+	        ResultSet rs = pst.executeQuery();
+	        if (rs.next()) {
+	            titre = rs.getString("titre");
+	        }
+	        // fermeuture
+	        rs.close();
+	        pst.close();
+	        conn.close();
+	        return titre;
+		 } catch (SQLException e) {
+		        e.printStackTrace();
+		 }
+		return "";
+	}
+	public static ArrayList<Utilisateur> rechercheUtilisateursAvecDroits(String id) {
+		ArrayList<Utilisateur> users = new ArrayList<>();
+        try {
+        Connection conn = DriverManager.getConnection(ParamBD.bdURL, ParamBD.bdLogin, ParamBD.bdPassword);
+        String sql =
+            "SELECT * FROM utilisateur,lecture WHERE id_utilisateur = id AND id_document = ? " +
+            "UNION " +
+            "SELECT * FROM utilisateur,ecriture WHERE id_utilisateur = id AND id_document = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, id);
+        ps.setString(2, id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+        	Utilisateur u = new Utilisateur(
+                    rs.getInt("id"),
+                    rs.getString("login")
+            );
+        	u.setDroitLecture(aDroitLecture(String.valueOf(u.getId()),id));
+        	u.setDroitEcriture(aDroitEcriture(String.valueOf(u.getId()),id));
+            users.add(u);
+        }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        return users;
+    }
+	public void ajouterDroitLecture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = "INSERT IGNORE INTO lecture(id_utilisateur, id_document) VALUES (?, ?)";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ps.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	public void ajouterDroitEcriture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = "INSERT IGNORE INTO ecriture(id_utilisateur, id_document) VALUES (?, ?)";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ps.executeUpdate();
 
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	public static boolean aDroitLecture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = """
+	            SELECT *
+	            FROM lecture
+	            WHERE id_utilisateur = ?
+	            AND id_document = ?
+	        """;
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ResultSet rs = ps.executeQuery();
+	        return rs.next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	public static boolean aDroitEcriture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = """
+	            SELECT *
+	            FROM ecriture
+	            WHERE id_utilisateur = ?
+	            AND id_document = ?
+	        """;
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ResultSet rs = ps.executeQuery();
+	        return rs.next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	public void supprimerDroitLecture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = """
+	            DELETE FROM lecture
+	            WHERE id_utilisateur = ?
+	            AND id_document = ?
+	        """;
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ps.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	public void supprimerDroitEcriture(String idUtilisateur, String idDocument) {
+	    try {
+	    	Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+	        String sql = """
+	            DELETE FROM ecriture
+	            WHERE id_utilisateur = ?
+	            AND id_document = ?
+	        """;
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, idUtilisateur);
+	        ps.setString(2, idDocument);
+	        ps.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

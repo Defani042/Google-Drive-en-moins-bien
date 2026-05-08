@@ -16,6 +16,16 @@
 	            🖊️ Modifier
 	        </button>
 	    </form>
+	    
+	    <!-- FORMULAIRE DROITS -->
+	    <form method="post" name="droits" action="${pageContext.request.contextPath}/Droits">
+	    	<input type="hidden" name="id_doc" value="${doc.id}">
+	    	<button class="button is-primary" type="submit">
+	            👤 Modifier les droits
+	        </button>
+	    </form>
+	    
+	    <br>
 	
 	    <!-- EDITEUR -->
 	    <div id="editor" style="height: 400px; border: 1px solid #ccc;"></div>

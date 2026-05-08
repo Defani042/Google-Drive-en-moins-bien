@@ -3,6 +3,8 @@ package model;
 public class Utilisateur {
 	private int id;
 	private String login;
+	private boolean droitLecture;
+	private boolean droitEcriture;
 	
 	//constructeur
 	public Utilisateur(int idu, String lo) {
@@ -17,6 +19,21 @@ public class Utilisateur {
 	}
 	public int getId() {
 		return id;
+	}
+	public boolean isDroitLecture() {
+		return droitLecture;
+	}
+	
+	public void setDroitLecture(boolean droitLecture) {
+		this.droitLecture = droitLecture;
+	}
+	 
+	public boolean isDroitEcriture() {
+		return droitEcriture;
+	 }
+	 
+	public void setDroitEcriture(boolean droitEcriture) {
+		this.droitEcriture = droitEcriture;
 	}
 }
 

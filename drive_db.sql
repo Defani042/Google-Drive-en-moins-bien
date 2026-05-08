@@ -87,3 +87,49 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
 -- Dump completed on 2026-04-26  0:36:34
+DROP TABLE IF EXISTS `lecture`;
+
+CREATE TABLE `lecture` (
+  `id_utilisateur` INT NOT NULL,
+  `id_document` INT NOT NULL,
+
+  PRIMARY KEY (`id_utilisateur`, `id_document`),
+
+  CONSTRAINT `lecture_ibfk_1`
+    FOREIGN KEY (`id_utilisateur`)
+    REFERENCES `utilisateur` (`id`)
+    ON DELETE CASCADE,
+
+  CONSTRAINT `lecture_ibfk_2`
+    FOREIGN KEY (`id_document`)
+    REFERENCES `document` (`id`)
+    ON DELETE CASCADE
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_uca1400_ai_ci;
+
+DROP TABLE IF EXISTS `ecriture`;
+
+CREATE TABLE `ecriture` (
+  `id_utilisateur` INT NOT NULL,
+  `id_document` INT NOT NULL,
+
+  PRIMARY KEY (`id_utilisateur`, `id_document`),
+
+  CONSTRAINT `ecriture_ibfk_1`
+    FOREIGN KEY (`id_utilisateur`)
+    REFERENCES `utilisateur` (`id`)
+    ON DELETE CASCADE,
+
+  CONSTRAINT `ecriture_ibfk_2`
+    FOREIGN KEY (`id_document`)
+    REFERENCES `document` (`id`)
+    ON DELETE CASCADE
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+
+
+

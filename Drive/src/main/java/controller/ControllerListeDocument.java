@@ -28,11 +28,15 @@ public class ControllerListeDocument extends HttpServlet {
 		//récupération de la liste
 		 DocumentDao dao = new DocumentDao();
 		 LinkedList<Document> docs = dao.getDocumentsByUser(u.getId());
+		 LinkedList<Document> docsLecture = dao.getDocumentsLecture(u.getId());
+		 LinkedList<Document> docsEcriture = dao.getDocumentsEcriture(u.getId());
 		 
 		 System.out.println("User ID: " + u.getId());
 		 System.out.println("Nb docs: " + docs.size());
 		 //enregistrement dans les variables de session
 		 request.setAttribute("documents", docs);
+		 request.setAttribute("lecture", docsLecture);
+		 request.setAttribute("ecriture", docsEcriture);
 		 request.getRequestDispatcher("/WEB-INF/views/ListeDocument.jsp").forward(request, response);
 	}
 

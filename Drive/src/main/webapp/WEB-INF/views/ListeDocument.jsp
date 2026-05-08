@@ -41,4 +41,64 @@
 
 </div>
 
+<hr>
+
+<h2 class="title has-text-centered">🖊️Documents partagés en écriture</h2>
+
+<div class="columns is-multiline">
+
+<c:forEach var="d" items="${ecriture}">
+    <div class="column is-4">
+        <div class="box">
+
+            <!-- TITRE -->
+            <p class="title is-6 has-text-centered">
+                ${d.titre}
+            </p>
+
+
+            <!-- ACTIONS -->
+            <div class="buttons is-centered mt-3">
+                <a href="${pageContext.request.contextPath}/Document?id=${d.id}"
+                   class="button is-link is-light">
+                    📖 Ouvrir
+                </a>
+            </div>
+
+        </div>
+    </div>
+</c:forEach>
+
+</div>
+
+<hr>
+
+<h2 class="title has-text-centered">📖Documents partagés en lecture</h2>
+
+<div class="columns is-multiline">
+
+<c:forEach var="d" items="${lecture}">
+    <div class="column is-4">
+        <div class="box">
+
+            <!-- TITRE -->
+            <p class="title is-6 has-text-centered">
+                ${d.titre}
+            </p>
+
+
+            <!-- ACTIONS -->
+            <div class="buttons is-centered mt-3">
+                <a href="${pageContext.request.contextPath}/Document?id=${d.id}"
+                   class="button is-link is-light">
+                    📖 Ouvrir
+                </a>
+            </div>
+
+        </div>
+    </div>
+</c:forEach>
+
+</div>
+
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>
