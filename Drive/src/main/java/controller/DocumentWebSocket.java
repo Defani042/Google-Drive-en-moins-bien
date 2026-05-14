@@ -25,7 +25,7 @@ public class DocumentWebSocket {
         mesSessions.add(session);
         try {
 			session.getBasicRemote().sendText(
-					"Utilisateur connecté" // Texte à l'envoi
+					"Vous êtes connecté" // Texte à l'envoi
 			);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
