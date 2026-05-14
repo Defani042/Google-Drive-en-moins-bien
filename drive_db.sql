@@ -17,6 +17,37 @@
 /*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
+-- Table structure for table `ami`
+--
+
+DROP TABLE IF EXISTS `ami`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ami` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_utilisateur1` int(11) NOT NULL,
+  `id_utilisateur2` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_utilisateur1` (`id_utilisateur1`),
+  KEY `id_utilisateur2` (`id_utilisateur2`),
+  CONSTRAINT `ami_ibfk_1` FOREIGN KEY (`id_utilisateur1`) REFERENCES `utilisateur` (`id`),
+  CONSTRAINT `ami_ibfk_2` FOREIGN KEY (`id_utilisateur2`) REFERENCES `utilisateur` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ami`
+--
+
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+LOCK TABLES `ami` WRITE;
+/*!40000 ALTER TABLE `ami` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ami` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+
+--
 -- Table structure for table `document`
 --
 
@@ -44,6 +75,64 @@ LOCK TABLES `document` WRITE;
 INSERT INTO `document` VALUES
 (1,'Nouveau Doc','<p>ffff</p><p><br></p><p>flflf</p><p><br></p>',1);
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+
+--
+-- Table structure for table `ecriture`
+--
+
+DROP TABLE IF EXISTS `ecriture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ecriture` (
+  `id_utilisateur` int(11) NOT NULL,
+  `id_document` int(11) NOT NULL,
+  PRIMARY KEY (`id_utilisateur`,`id_document`),
+  KEY `ecriture_ibfk_2` (`id_document`),
+  CONSTRAINT `ecriture_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `ecriture_ibfk_2` FOREIGN KEY (`id_document`) REFERENCES `document` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ecriture`
+--
+
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+LOCK TABLES `ecriture` WRITE;
+/*!40000 ALTER TABLE `ecriture` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ecriture` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+
+--
+-- Table structure for table `lecture`
+--
+
+DROP TABLE IF EXISTS `lecture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lecture` (
+  `id_utilisateur` int(11) NOT NULL,
+  `id_document` int(11) NOT NULL,
+  PRIMARY KEY (`id_utilisateur`,`id_document`),
+  KEY `lecture_ibfk_2` (`id_document`),
+  CONSTRAINT `lecture_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `lecture_ibfk_2` FOREIGN KEY (`id_document`) REFERENCES `document` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lecture`
+--
+
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+LOCK TABLES `lecture` WRITE;
+/*!40000 ALTER TABLE `lecture` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lecture` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
@@ -86,50 +175,4 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-04-26  0:36:34
-DROP TABLE IF EXISTS `lecture`;
-
-CREATE TABLE `lecture` (
-  `id_utilisateur` INT NOT NULL,
-  `id_document` INT NOT NULL,
-
-  PRIMARY KEY (`id_utilisateur`, `id_document`),
-
-  CONSTRAINT `lecture_ibfk_1`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `utilisateur` (`id`)
-    ON DELETE CASCADE,
-
-  CONSTRAINT `lecture_ibfk_2`
-    FOREIGN KEY (`id_document`)
-    REFERENCES `document` (`id`)
-    ON DELETE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_uca1400_ai_ci;
-
-DROP TABLE IF EXISTS `ecriture`;
-
-CREATE TABLE `ecriture` (
-  `id_utilisateur` INT NOT NULL,
-  `id_document` INT NOT NULL,
-
-  PRIMARY KEY (`id_utilisateur`, `id_document`),
-
-  CONSTRAINT `ecriture_ibfk_1`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `utilisateur` (`id`)
-    ON DELETE CASCADE,
-
-  CONSTRAINT `ecriture_ibfk_2`
-    FOREIGN KEY (`id_document`)
-    REFERENCES `document` (`id`)
-    ON DELETE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_uca1400_ai_ci;
-
-
-
-
-
+-- Dump completed on 2026-05-13 19:51:56

@@ -64,6 +64,17 @@
 	          </a>
 	        </div>
 	      </div>
+	      
+	       <div class="column is-3">
+	        <div class="box has-text-centered">
+	          <p class="title is-6">👤 Profil</p>
+	          <p class="mb-3">Modifier votre profil</p>
+	          <a href="${pageContext.request.contextPath}/Profil"
+	             class="button is-info is-fullwidth">
+	            Profil
+	          </a>
+	        </div>
+	      </div>
 	
 	    </div>
 	
