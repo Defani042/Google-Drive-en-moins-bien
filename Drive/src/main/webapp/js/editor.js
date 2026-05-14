@@ -1,6 +1,43 @@
 //attendre que la page soit prête
 document.addEventListener("DOMContentLoaded", () => {
 	
+	const adresse = "ws://" + window.location.host + "/Drive/DocumentWebSocket";
+	let socket = new WebSocket(adresse);
+	
+	//Fonction pour se connecter au Websocket
+	
+	function connectToWebsocket(){
+		socket.addEventListener('message', event => {
+			let data = event.data;
+			let obj = JSON.parse(data);
+			
+			//On récupère l'id du doc
+			const params = new URLSearchParams(window.location.search);
+			const id_doc = params.get("id");
+			
+			if (obj.id == id_doc){
+				if (obj.type == "editor"){
+					quill.setContents(obj.content);
+				}
+				else if (obj.type == "chat"){
+					;//
+				}
+			}
+		});
+		
+		socket.addEventListener('open', event => {
+			console.log("Connecté");
+			});
+		
+		socket.addEventListener('close', event => {
+			console.log("Déconnecté");
+			});
+		
+		socket.addEventListener('error', event => {
+			console.log("Erreur");
+			});
+	}
+	
 	//création de l'éditeur de texte
     const quill = new Quill('#editor', {
         theme: 'snow'
@@ -9,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	//récupération du contenu
     const content = document.getElementById("docContent").value || "";
     quill.root.innerHTML = content;
+	
+	//Connexion au websocket
+	connectToWebsocket();
 	
 	//récupère le bon formulaire 
     const saveForm = document.querySelector("form[name='save']");
@@ -21,6 +61,25 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		//met le contenu dans le champs hidden
 	    document.getElementById("hiddenContent").value = content;
+	});
+	
+	//A chaque changement, on y envoit au serveur :
+	quill.on('text-change', function(delta, oldDelta, source) {
+		//On récupère les changements
+	    const deltaContent = quill.getContents();
+		
+		//On récupère l'id du doc
+		const params = new URLSearchParams(window.location.search);
+		const id_doc = params.get("id");
+		
+		//Pour éviter une boucle infini, on rajoute cette condition (L'update automatique du contenu est de source silent)
+		if (source == "user"){
+			socket.send(JSON.stringify({
+						type: "editor",
+				        content: deltaContent,
+						id: id_doc 
+			}));
+		}
 	});
 
 });

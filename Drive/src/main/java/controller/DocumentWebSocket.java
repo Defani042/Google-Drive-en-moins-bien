@@ -2,10 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnError;
@@ -23,14 +20,6 @@ public class DocumentWebSocket {
     public void onOpen(Session session) {
         System.out.println("Utilisateur connecté : " + session.getId());
         mesSessions.add(session);
-        try {
-			session.getBasicRemote().sendText(
-					"Vous êtes connecté" // Texte à l'envoi
-			);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
     }
 
     @OnClose
@@ -42,7 +31,16 @@ public class DocumentWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("Reçu : " + message);
-        //sendUpdateToAll(session);
+        for (Session s: mesSessions) {
+        	if (!s.equals(session)) {
+        		try {
+    				s.getBasicRemote().sendText(message);
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+        	}
+        }
     }
 
     @OnError
