@@ -58,9 +58,18 @@
 
             <!-- Profil -->
             <a class="navbar-item"
-               href="${pageContext.request.contextPath}/Profile">
+               href="${pageContext.request.contextPath}/Profil">
 
                 <img src="${pageContext.request.contextPath}/img/user.svg"
+                     alt="Profil"
+                     style="max-height:40px;">
+            </a>
+            
+            <!-- ami -->
+            <a class="navbar-item"
+               href="${pageContext.request.contextPath}/Ami">
+
+                <img src="${pageContext.request.contextPath}/img/friend.svg"
                      alt="Profil"
                      style="max-height:40px;">
             </a>

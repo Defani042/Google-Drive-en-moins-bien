@@ -14,11 +14,15 @@ public class Utilisateur implements Serializable {
 		id = idu;
 		login = lo;
 	}
+	public Utilisateur() {};
 	
 	
 	//getter et setter
 	public String getLogin() {
 		return login;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getId() {
 		return id;

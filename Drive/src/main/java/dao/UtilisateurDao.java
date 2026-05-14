@@ -118,13 +118,55 @@ public class UtilisateurDao {
 			ps.setString(2,mdp);
 			ps.setInt(3,id);
 			ps.executeUpdate();
+			
 			//fermeuture 
 			ps.close();
 			conn.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	public ArrayList<Utilisateur> recupererUtilisateurs(int idActuel) {
+
+	    ArrayList<Utilisateur> users = new ArrayList<>();
+
+	    try {
+
+	        Connection conn = DriverManager.getConnection(
+	                ParamBD.bdURL,
+	                ParamBD.bdLogin,
+	                ParamBD.bdPassword
+	        );
+
+	        String sql =
+	                "SELECT id, login FROM utilisateur WHERE id != ?";
+
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setInt(1, idActuel);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+
+	            Utilisateur u = new Utilisateur();
+	            u.setId(rs.getInt("id"));
+	            u.setLogin(rs.getString("login"));
+
+	            users.add(u);
+	        }
+
+	        rs.close();
+	        ps.close();
+	        conn.close();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return users;
+	}
+	
 }
 
