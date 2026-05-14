@@ -98,10 +98,33 @@ public class UtilisateurDao {
 				Utilisateur u = new Utilisateur(rs.getInt("id"),rs.getString("login"));
 				liste.add(u);
 			}
+			//fermeuture 
+			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
+	}
+	public void modifierUtilisateur(int id,String login,String mdp){
+		try {
+			Connection conn = DriverManager.getConnection(ParamBD.bdURL,ParamBD.bdLogin,ParamBD.bdPassword);
+			String sql =
+	                "UPDATE utilisateur " +
+	                "SET login = ?, password = ? " +
+	                "WHERE id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,login);
+			ps.setString(2,mdp);
+			ps.setInt(3,id);
+			ps.executeUpdate();
+			//fermeuture 
+			ps.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 

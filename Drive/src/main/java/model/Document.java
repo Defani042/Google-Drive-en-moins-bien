@@ -1,10 +1,14 @@
 package model;
 
-public class Document {
+import java.io.Serializable;
+
+public class Document implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int id;
     private String titre;
     private String contenu; 
     private int proprietaireId;
+    
     
     //constructeur 
     public Document() {}
