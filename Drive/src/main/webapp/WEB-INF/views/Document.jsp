@@ -74,14 +74,15 @@
 		            <form method="post" action="${pageContext.request.contextPath}/Document">
 		                <input type="hidden" name="id" value="${doc.id}">
 		                <input type="hidden" name="action" value="message">
+		                <input type="hidden" id="username" value="${sessionScope.utilisateur.login}">
 		                <div class="field">
 		                    <div class="control">
-		                        <textarea class="textarea" name="message" placeholder="Votre message..." required></textarea>
+		                        <textarea class="textarea" id="content" name="message" placeholder="Votre message..." required></textarea>
 		                    </div>
 		                </div>
 		                <div class="field">
 		                    <div class="control">
-		                        <button class="button is-link is-fullwidth">
+		                        <button class="button is-link is-fullwidth" onclick="diffuserMessage()">
 		                            Envoyer
 		                        </button>
 		                    </div>
@@ -93,7 +94,7 @@
 	</div>
 </section>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="${pageContext.request.contextPath}/js/editor.js?v=7"></script>
+<script src="${pageContext.request.contextPath}/js/editor.js?v=9"></script>
 
 
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>

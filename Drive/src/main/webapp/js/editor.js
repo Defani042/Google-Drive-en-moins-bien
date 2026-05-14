@@ -20,7 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 					quill.setContents(obj.content);
 				}
 				else if (obj.type == "chat"){
-					;//
+					let chatbox = document.getElementById("chat-box");
+					chatbox.innerHTML += `
+					                <div class="notification is-dark">
+					                    <strong>${obj.username}</strong><br>
+					                    ${obj.content}
+					                </div>
+					            `;
+					
 				} else if (obj.type == "join"){
 					//On récupère le document actuel pour l'envoyer
 					const deltaContent = quill.getContents();
@@ -40,10 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			const params = new URLSearchParams(window.location.search);
 			const id_doc = params.get("id");
 			
+			//On averti toutes les sessions qu'on vient de se connecter afin d'avoir la version la + à jour possbile du doc
 			socket.send(JSON.stringify({
 							type: "join",
 							id: id_doc 
 						}));
+						
 			});
 		
 		socket.addEventListener('close', event => {
@@ -98,5 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
 			}));
 		}
 	});
+	
+	window.diffuserMessage = function(){
+		const contentMessage = document.getElementById("content").value;
+		const user = document.getElementById("username").value;
+		const params = new URLSearchParams(window.location.search);
+		const id_doc = params.get("id");
 
+		socket.send(JSON.stringify({
+			type: "chat",
+			content: contentMessage,
+			id: id_doc,
+			username: user 
+		}));
+	}
 });
