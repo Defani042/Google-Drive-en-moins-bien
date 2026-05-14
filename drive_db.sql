@@ -138,6 +138,22 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
+-- Table structure for table `message`
+--
+DROP TABLE IF EXISTS `message`;
+
+CREATE TABLE `message` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`id_document` int(11) NOT NULL,
+	`id_utilisateur` INT NOT NULL,
+	`message` text NOT NULL,
+	`date_message` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `message_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  	CONSTRAINT `message_ibfk_2` FOREIGN KEY (`id_document`) REFERENCES `document` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
 -- Table structure for table `utilisateur`
 --
 
