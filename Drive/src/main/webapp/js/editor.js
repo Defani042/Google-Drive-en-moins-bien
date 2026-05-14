@@ -21,12 +21,29 @@ document.addEventListener("DOMContentLoaded", () => {
 				}
 				else if (obj.type == "chat"){
 					;//
+				} else if (obj.type == "join"){
+					//On récupère le document actuel pour l'envoyer
+					const deltaContent = quill.getContents();
+					
+					socket.send(JSON.stringify({
+										type: "editor",
+									    content: deltaContent,
+										id: id_doc 
+								}));
 				}
 			}
 		});
 		
 		socket.addEventListener('open', event => {
 			console.log("Connecté");
+			//On récupère l'id du doc
+			const params = new URLSearchParams(window.location.search);
+			const id_doc = params.get("id");
+			
+			socket.send(JSON.stringify({
+							type: "join",
+							id: id_doc 
+						}));
 			});
 		
 		socket.addEventListener('close', event => {
