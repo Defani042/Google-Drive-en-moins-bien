@@ -43,8 +43,6 @@ public class ControllerDocument extends HttpServlet {
 	    }
 	    int id = Integer.parseInt(idParam);
 	    ArrayList<Message> messages = MessageDao.getMessagesByDocument(id);
-	    System.out.println("TEST MESSAGE 0 = " + messages.get(0).getMessage());
-	    System.out.println("TEST LOGIN = " + messages.get(0).getNomUtilisateur());
 	    request.setAttribute("messages", messages);
 	    //récupération du document
 	    doc = dao.getDocument(id);
