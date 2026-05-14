@@ -94,7 +94,7 @@
 	</div>
 </section>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="${pageContext.request.contextPath}/js/editor.js?v=9"></script>
+<script src="${pageContext.request.contextPath}/js/editor.js"></script>
 
 
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>
