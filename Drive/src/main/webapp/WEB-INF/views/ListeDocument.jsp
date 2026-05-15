@@ -89,12 +89,14 @@
 
             <!-- ACTIONS -->
             <div class="buttons is-centered mt-3">
-                <a href="${pageContext.request.contextPath}/Document?id=${d.id}"
-                   class="button is-link is-light">
-                    📖 Ouvrir
-                </a>
+                <form method="post" action="${pageContext.request.contextPath}/Document">
+                    <input type="hidden" name="id" value="${d.id}">
+                    <input type="hidden" name="action" value="lecture">
+                    <button class="button is-link is-light">
+                        📖 Ouvrir
+                    </button>
+                </form>
             </div>
-
         </div>
     </div>
 </c:forEach>

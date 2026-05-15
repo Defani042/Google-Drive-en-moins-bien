@@ -48,7 +48,7 @@ public class ControllerDocument extends HttpServlet {
 	    doc = dao.getDocument(id);
 		// envoyer à la JSP
 		request.setAttribute("doc", doc);
-
+		request.setAttribute("lecture", false);
 		//sinon page d'acceuille
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/Document.jsp");
 		rd.forward(request, response);
@@ -90,6 +90,29 @@ public class ControllerDocument extends HttpServlet {
 	    	MessageDao.sauvegardeMessage(m);
 	    	// redirection vers le document
 		    response.sendRedirect("Document?id=" + id);
+	    }
+	    if ("lecture".equals(action)) {
+	    	DocumentDao dao = new DocumentDao();
+			Document doc;
+			// récupérer id du document
+			String idParam = request.getParameter("id");
+		    if (idParam == null || idParam.isEmpty()) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID document manquant");
+		        return;
+		    }
+		    int id = Integer.parseInt(idParam);
+		    ArrayList<Message> messages = MessageDao.getMessagesByDocument(id);
+		    request.setAttribute("messages", messages);
+		    //récupération du document
+		    doc = dao.getDocument(id);
+			// envoyer à la JSP
+			request.setAttribute("doc", doc);
+			request.setAttribute("lecture", true);
+			//sinon page d'acceuille
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/Document.jsp");
+			rd.forward(request, response);
+			
+			return;
 	    }
 	}
 
