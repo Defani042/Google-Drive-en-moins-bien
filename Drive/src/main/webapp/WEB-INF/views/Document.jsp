@@ -8,26 +8,35 @@
 	  <div class="container">
 	
 	    <!-- FORMULAIRE TITRE -->
-	     <form method="post" name="titre" action="${pageContext.request.contextPath}/Document">
-	    	<!-- <h1 class="title">${doc.titre}</h1> -->
-	    	<input class ="title "type="text" name="titre" value="${doc.titre}" style="background-color: transparent;">
-	    	<input type="hidden" name="action" value="titre">
-	    	<input type="hidden" name="id" value="${doc.id}">
-	        <button class="button is-primary" type="submit">
-	            🖊️ Modifier
-	        </button>
-	    </form>
+	    <c:choose>
+		    <c:when test="${!lecture}">
+		     	<form method="post" name="titre" action="${pageContext.request.contextPath}/Document">
+			    	<!-- <h1 class="title">${doc.titre}</h1> -->
+			    	<input class ="title"type="text" name="titre" value="${doc.titre}" style="background-color: transparent;">
+			    	<input type="hidden" name="action" value="titre">
+			    	<input type="hidden" name="id" value="${doc.id}">
+			        <button class="button is-primary" type="submit">
+			            🖊️ Modifier
+			        </button>
+		    	</form>
+		    </c:when>
+			<c:otherwise>
+				<h1 class="title">${doc.titre}</h1>
+			</c:otherwise>
+		</c:choose>
 	    <br>
 	    <div class="columns is-variable is-3">
 		    <!-- COLONNE EDITEUR -->
 		    <div class="column is-8">
 		    <!-- FORMULAIRE DROITS -->
+		    	<c:if test="${!lecture}">
 			    <form method="post" name="droits" action="${pageContext.request.contextPath}/Droits">
 			    	<input type="hidden" name="id_doc" value="${doc.id}">
 			    	<button class="button is-primary" type="submit">
 			            👤 Modifier les droits
 			        </button>
 			    </form>
+			    </c:if>
 		        <!-- EDITEUR -->
 		        <div style="width:100%; overflow:hidden;">
 	
@@ -46,9 +55,11 @@
 		            <input type="hidden" name="action" value="save">
 		            <input type="hidden" name="id" value="${doc.id}">
 		            <div class="mt-4">
-		                <button class="button is-primary" type="submit">
-		                    💾 Sauvegarder
-		                </button>
+		            	<c:if test="${!lecture}">
+			                <button class="button is-primary" type="submit">
+			                    💾 Sauvegarder
+			                </button>
+			            </c:if>
 		            </div>
 		        </form>
 		    </div>
@@ -93,8 +104,8 @@
 	    </div>
 	</div>
 </section>
+<script>const lecture = ${lecture ? 'true' : 'false'};</script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="${pageContext.request.contextPath}/js/editor.js"></script>
-
 
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>
