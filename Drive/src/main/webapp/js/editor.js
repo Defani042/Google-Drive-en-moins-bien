@@ -38,6 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
 										id: id_doc 
 								}));
 				}
+				else if (obj.type == "titre"){
+					const titre = document.getElementById("titre");
+					titre.value = obj.content;
+				}
 			}
 		});
 		
@@ -106,6 +110,20 @@ document.addEventListener("DOMContentLoaded", () => {
 						id: id_doc 
 			}));
 		}
+	});
+	
+	const titre = document.getElementById("titre");
+	
+	titre.addEventListener("input", (event) => {
+		//On récupère l'id du doc
+		const params = new URLSearchParams(window.location.search);
+		const id_doc = params.get("id");
+		   
+		socket.send(JSON.stringify({
+			type: "titre",
+			id: id_doc,
+			content: event.target.value
+		}));
 	});
 	
 	window.diffuserMessage = function(){

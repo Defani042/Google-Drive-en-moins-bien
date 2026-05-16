@@ -12,7 +12,7 @@
 		    <c:when test="${!lecture}">
 		     	<form method="post" name="titre" action="${pageContext.request.contextPath}/Document">
 			    	<!-- <h1 class="title">${doc.titre}</h1> -->
-			    	<input class ="title"type="text" name="titre" value="${doc.titre}" style="background-color: transparent;">
+			    	<input class ="title"type="text" id= "titre" name="titre" value="${doc.titre}" style="background-color: transparent;">
 			    	<input type="hidden" name="action" value="titre">
 			    	<input type="hidden" name="id" value="${doc.id}">
 			        <button class="button is-primary" type="submit">
@@ -106,6 +106,6 @@
 </section>
 <script>const lecture = ${lecture ? 'true' : 'false'};</script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="${pageContext.request.contextPath}/js/editor.js"></script>
+<script src="${pageContext.request.contextPath}/js/editor.js?v=3"></script>
 
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>
