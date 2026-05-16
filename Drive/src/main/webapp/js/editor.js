@@ -80,6 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
         theme: 'snow'
     });
 	
+	//Si on est en mode lecture, quill est désactivé
+	if (lecture) {
+	    quill.enable(false);
+	}
+	
 	//récupération du contenu
     const content = document.getElementById("docContent").value || "";
     quill.root.innerHTML = content;
