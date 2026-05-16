@@ -106,6 +106,6 @@
 </section>
 <script>const lecture = ${lecture ? 'true' : 'false'};</script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="${pageContext.request.contextPath}/js/editor.js?v=3"></script>
+<script src="${pageContext.request.contextPath}/js/editor.js?v=5"></script>
 
 <jsp:include page="/WEB-INF/views/Footer.jsp"></jsp:include>

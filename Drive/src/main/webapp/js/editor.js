@@ -1,6 +1,7 @@
 //attendre que la page soit prête
 document.addEventListener("DOMContentLoaded", () => {
 	
+	const titre = document.getElementById("titre");
 	const adresse = "ws://" + window.location.host + "/Drive/DocumentWebSocket";
 	let socket = new WebSocket(adresse);
 	
@@ -33,10 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
 					const deltaContent = quill.getContents();
 					
 					socket.send(JSON.stringify({
-										type: "editor",
-									    content: deltaContent,
-										id: id_doc 
-								}));
+						type: "editor",
+					    content: deltaContent,
+						id: id_doc 
+					}));
+								
+					socket.send(JSON.stringify({
+						type: "titre",
+						id: id_doc,
+						content: titre.value
+					}));
 				}
 				else if (obj.type == "titre"){
 					const titre = document.getElementById("titre");
@@ -112,8 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 	
-	const titre = document.getElementById("titre");
-	
+	//Event qui gère l'envoi dynamique du texte
 	titre.addEventListener("input", (event) => {
 		//On récupère l'id du doc
 		const params = new URLSearchParams(window.location.search);
