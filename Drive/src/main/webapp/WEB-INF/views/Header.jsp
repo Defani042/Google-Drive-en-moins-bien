@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -73,6 +74,15 @@
                      alt="Profil"
                      style="max-height:40px;">
             </a>
+            
+            <!-- Admin -->
+			<c:if test="${sessionScope.utilisateur.admin}">
+    			<a class="navbar-item" href="${pageContext.request.contextPath}/Admin">
+				    <img src="${pageContext.request.contextPath}/img/admin.svg"
+             		alt="Admin"
+             		style="max-height:40px;">
+    			</a>
+			</c:if>
 
         </div>
 

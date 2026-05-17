@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.Timestamp;
-
 public class Message {
     private int idDocument;
     private int idUtilisateur;

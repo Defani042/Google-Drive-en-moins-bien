@@ -50,6 +50,7 @@ public class UtilisateurDao {
 			 
 			if (rs.next()) {
 				u = new Utilisateur(rs.getInt("id"),rs.getString("login")); 
+				u.setAdmin(rs.getBoolean("admin"));
 			 	}
 			//fermeuture 
 			pst.close();
@@ -167,6 +168,27 @@ public class UtilisateurDao {
 
 	    return users;
 	}
-	
+    // Supprimer un utilisateur par son id
+    public void supprimerUtilisateur(int id) {
+        try {
+            Connection conn = DriverManager.getConnection(
+                    ParamBD.bdURL,
+                    ParamBD.bdLogin,
+                    ParamBD.bdPassword
+            );
+
+            String sql = "DELETE FROM utilisateur WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
