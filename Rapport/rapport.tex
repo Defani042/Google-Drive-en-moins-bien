@@ -16,108 +16,128 @@
 \date{\today}
 
 \begin{document}
-
-\maketitle
-
-\newpage
-
-\tableofcontents
-\setcounter{tocdepth}{2}  
-
-\newpage 
-
-\section{Presentation du Projet}
-
-Le projet présenté est un "Google drive", c'est à dire un document texte que plusieurs utilisateurs peuvent modifier en même temps.
-
-Le projet suit une structure web java et possède 4 dossiers principaux : 
-\begin{itemize}
-	\item Controller ;
-	\item Dao ;
-	\item Model ;
-	\item et View.
-\end{itemize}
-
-Controller permet de gérer toutes les servlets, Dao contient tout ce qui est en rapport avec la base de données, Model contient toutes les objets java et View contient tous les fichier jsp et html.
-Quand au css, on utilise Bulma, un dossier java script dans Webapp et la base de donnée est à la racine du projet
-
-~
-
-Nous sommes partis sur un site de gestion de document avec un partage de documents avec un système de profils, chaque personne a le droit de créer des documents, peuvent le partager en lecture et en écriture à d'autres utilisateurs.
-
-\section{Fonctionnalitées}
-
-\begin{itemize}
-	\item Création de documents;
-	\item Modification de documents;
-	\item Suppression de documents;
-	\item Gestion des droits et partage;
-	\item Chat entre utilisateur du document;
-	\item Gestion de l'utilisateur.
-\end{itemize}
-
-\subsection{Création de document}
-
-Chaque utilisateur inscrit possède le droit de créer des documents en nombre illimité. Un document crée est automatiquement inséré dans la base de donnée avec comme nom : "Nouveau document". A la création, le contenu est vide, tout comme le chat.
-
-\subsection{Modification de documents}
-
-Lorsqu'une modification est effectuée, elle est envoyée à un Serveur Websocket et est redistribuée à toutes les sessions connectées afin d'afficher en direct les changements.
-Tous les changements doivent être confirmés via un bouton.
-Tous les utilisateurs ont accès à un chat lié au document.
-
-~
-
-Pour un utilisateur avec des droits d'écriture :
-L'utilisateur peut modifier le titre du document ainsi que le contenu du document via Quill, qui est une librairie permettant d'écrire un texte enrichi sur web.
-A noter que pour enregistrer les changements, il faut impérativement sauvegarder avant, sans quoi le contenu est perdu.
-
-~
-
-Pour un utilisateur avec des droits de lecture :
-L'utilisateur peut seulement voir le contenu du document ainsi que le titre, sans pouvoir le modifier.
-
-\subsection{Suppression de documents}
-
-Seul l'utilisateur à l'origine du document peut supprimer le document via la page de liste de documents.
-
-\subsection{Gestion des droits et partage}
-
-L'utilisateur à l'origine du document peut séléctionner les droits de chaque utilisateur. Un utilisateur peut soit ne pas avoir accès au document, soit pouvoir uniquement le lire, soit pouvoir le lire et le modifier.
-
-\subsection{Chat entre utilisateur du document}
-
-Sur chaque document, une fenêtre de chat est ouverte afin de permettre la communication entre utilisateurs sur le même document. L'historique est enregistré dans la base de donnée.
-A chaque message est associé le nom de l'utilisateur correspondant. Tout le monde ayant accès au document peut écrire dans le chat.
-
-\subsection{Gestion de l'utilisateur}
-
-Un utilisateur a un profile sur le site. Il peut modifier son mot de passe dessus ainsi qu'être ami avec d'autres utilisateurs.
-
-\section{Base de données}
-
-Voici le modèle de notre base de données : 
-
-~
-
-\includegraphics[width=1\textwidth]{img/modele.png}
-
-\section{Technologies utilisées}
-
-\subsection{Quill}
-
-Quill est une bibliothèque permettant de pouvoir facilement inclure un éditeur de texte riche de type WYSIWYG. Nous l'avons utilisé dans le cadre de l'édition de documents. L'entièreté de son utilisation se trouve dans la vue document.jsp (import) ainsi que dans editor.js
-
-\subsection{Websocket}
-
-Pour afficher dynamiquement et simultanément chez toutes les sessions les changements effectués en direct, nous avons crée un serveur websocket qui redistribue à tout le monde toutes les interactions. Le serveur websocket est situé dans DocumentWebSocket, tandis que les clients sont dans editor.js
-
-\section{Répartition du travail}
-
-\begin{itemize}
-	\item Gaultier : Droits, Vues, Gestion Document, Liste Document, Chat | Environ 15 heures
-	\item Adrien : Modèle, DAO, Vues, Amis et Utilisateurs, Liste Document | Environ 25 heures
-	\item Dorian : Websocket, Quill, Debug | Environ 12 heures
-\end{itemize}
-
+	
+	\maketitle
+	
+	\newpage
+	
+	\tableofcontents
+	\setcounter{tocdepth}{2}  
+	
+	\newpage 
+	
+	\section{Présentation du Projet}
+	
+	Le projet présenté est un "Google Drive", c'est-à-dire un document texte que plusieurs utilisateurs peuvent modifier en même temps.
+	
+	Le projet suit une structure web Java et possède 4 dossiers principaux : 
+	\begin{itemize}
+		\item Controller ;
+		\item Dao ;
+		\item Model ;
+		\item et View.
+	\end{itemize}
+	
+	Controller permet de gérer toutes les servlets, Dao contient tout ce qui est en rapport avec la base de données, Model contient tous les objets Java et View contient tous les fichiers JSP et HTML.
+	Quant au CSS, nous utilisons Bulma, un dossier JavaScript dans Webapp et la base de données est à la racine du projet.
+	
+	~
+	
+	Nous sommes partis sur un site de gestion de documents avec un système de profils et de partage de documents. Chaque personne a le droit de créer des documents et peut les partager en lecture et en écriture avec d'autres utilisateurs.
+	
+	\section{Diagramme de classes}
+	
+	Voici le diagramme de classes de nos classes Java : 
+	
+	\includegraphics[width=1\textwidth]{img/diagramme dw2.png}
+	
+	\newpage
+	
+	\section{Fonctionnalités}
+	
+	\begin{itemize}
+		\item Création de documents ;
+		\item Modification de documents ;
+		\item Suppression de documents ;
+		\item Gestion des droits et partage ;
+		\item Chat entre utilisateurs du document ;
+		\item Gestion de l'utilisateur ;
+		\item Upload et download.
+	\end{itemize}
+	
+	\subsection{Création de document}
+	
+	Chaque utilisateur inscrit possède le droit de créer des documents en nombre illimité. Un document créé est automatiquement inséré dans la base de données avec comme nom : "Nouveau document". À la création, le contenu est vide, tout comme le chat.
+	
+	\subsection{Modification de documents}
+	
+	Lorsqu'une modification est effectuée, elle est envoyée à un serveur WebSocket et redistribuée à toutes les sessions connectées afin d'afficher en direct les changements.
+	Tous les changements doivent être confirmés via un bouton.
+	Tous les utilisateurs ont accès à un chat lié au document.
+	
+	~
+	
+	Pour un utilisateur avec des droits d'écriture :
+	L'utilisateur peut modifier le titre du document ainsi que le contenu du document via Quill, qui est une librairie permettant d'écrire un texte enrichi sur le web.
+	À noter que pour enregistrer les changements, il faut impérativement sauvegarder avant, sans quoi le contenu est perdu.
+	
+	~
+	
+	Pour un utilisateur avec des droits de lecture :
+	L'utilisateur peut seulement voir le contenu du document ainsi que le titre, sans pouvoir le modifier.
+	
+	\subsection{Suppression de documents}
+	
+	Seul l'utilisateur à l'origine du document peut supprimer le document via la page de liste des documents.
+	
+	\subsection{Gestion des droits et partage}
+	
+	L'utilisateur à l'origine du document peut sélectionner les droits de chaque utilisateur. Un utilisateur peut soit ne pas avoir accès au document, soit pouvoir uniquement le lire, soit pouvoir le lire et le modifier.
+	
+	\subsection{Chat entre utilisateurs du document}
+	
+	Sur chaque document, une fenêtre de chat est ouverte afin de permettre la communication entre utilisateurs sur le même document. L'historique est enregistré dans la base de données.
+	
+	~
+	
+	À chaque message est associé le nom de l'utilisateur correspondant. Tout le monde ayant accès au document peut écrire dans le chat.
+	
+	\subsection{Gestion des utilisateurs}
+	
+	Un utilisateur a un profil sur le site. Il peut modifier son mot de passe dessus ainsi qu'être ami avec d'autres utilisateurs.
+	
+	~
+	
+	Nous avons un système d'administrateurs qui peuvent supprimer les autres utilisateurs, sachant qu'un administrateur ne peut pas en supprimer un autre.
+	
+	\subsection{Upload et download}
+	
+	Nous avons fait un système d'upload et de download. Cela veut dire que nous pouvons télécharger un fichier depuis notre drive et aussi charger un document "txt" déjà existant sur notre machine pour le mettre sur le drive.
+	
+	\section{Base de données}
+	
+	Voici le modèle de notre base de données : 
+	
+	~
+	
+	\includegraphics[width=1\textwidth]{img/modele.png}
+	
+	\section{Technologies utilisées}
+	
+	\subsection{Quill}
+	
+	Quill est une bibliothèque permettant d'inclure facilement un éditeur de texte riche de type WYSIWYG. Nous l'avons utilisé dans le cadre de l'édition de documents. L'entièreté de son utilisation se trouve dans la vue document.jsp (import) ainsi que dans editor.js.
+	
+	\subsection{WebSocket}
+	
+	Pour afficher dynamiquement et simultanément chez toutes les sessions les changements effectués en direct, nous avons créé un serveur WebSocket qui redistribue à tout le monde toutes les interactions. Le serveur WebSocket est situé dans DocumentWebSocket, tandis que les clients sont dans editor.js.
+	
+	\section{Répartition du travail}
+	
+	\begin{itemize}
+		\item Gaultier : Droits, vues, gestion des documents, liste des documents, chat | Environ 15 heures
+		\item Adrien : Modèle, DAO, vues, amis et utilisateurs, liste des documents | Environ 25 heures
+		\item Dorian : WebSocket, Quill, debug | Environ 12 heures
+	\end{itemize}
+	
 \end{document}
