@@ -51,7 +51,7 @@ public class ControllerProfil extends HttpServlet {
         if (!mdp.equals(confirm)) {
 
             request.setAttribute(
-                "erreur",
+                "erreur2",
                 "Les mots de passe ne correspondent pas"
             );
 
