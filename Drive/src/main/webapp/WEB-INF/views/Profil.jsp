@@ -6,7 +6,7 @@
 </jsp:include>
 <c:if test="${not empty erreur}">
     <div class="notification is-danger">
-        ${erreur}
+        ${erreur2}
     </div>
 </c:if>
 <section class="section">
