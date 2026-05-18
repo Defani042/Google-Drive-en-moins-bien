@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.Document;
 import model.Utilisateur;
 import model.Message;
@@ -21,6 +22,7 @@ import dao.MessageDao;
  * Servlet implementation class ControllerDocument
  */
 @WebServlet("/Document")
+@jakarta.servlet.annotation.MultipartConfig
 public class ControllerDocument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
@@ -61,6 +63,26 @@ public class ControllerDocument extends HttpServlet {
 	    // check si utilisateur est null
 	    if (u == null) {
 	        response.sendRedirect("Connexion");
+	        return;
+	    }
+	    
+
+	    // Vérifier si téléchargement
+	    if ("download".equals(request.getParameter("action"))) {
+	    	int id = Integer.parseInt(request.getParameter("id"));
+		    DocumentDao dao = new DocumentDao();
+		    Document doc = dao.getDocument(id);
+		    
+		 // indique au navigateur que c'est un fichier à télécharger
+		 response.setContentType("application/octet-stream");
+		 // Ajoute un en-tête HTTP "Content-Disposition" pour forcer le téléchargement.
+		 // Le "filename" spécifie le nom suggéré pour le fichier téléchargé.
+		 // Ici, on remplace les espaces dans le titre par des underscores et ajoute l'extension ".txt".
+		 response.setHeader("Content-Disposition", "attachment; filename=\"" + doc.getTitre().replaceAll("\\s", "_") + ".txt\"");
+		 // Écrit le contenu du document dans le flux de sortie de la réponse.
+		 response.getOutputStream().write(doc.getContenu().getBytes("UTF-8"));
+		 // Vide le flux de sortie pour s'assurer que tous les octets sont envoyés au client.
+		 response.getOutputStream().flush();
 	        return;
 	    }
 		if ("save".equals(action)) {
@@ -114,6 +136,33 @@ public class ControllerDocument extends HttpServlet {
 			
 			return;
 	    }
-	}
+	    if ("upload".equals(action)) {
+	        try {
+	        	System.out.println("UPLOAD");
+	            Part fichierPart = request.getPart("fichier");
+	            if (fichierPart != null && fichierPart.getSize() > 0) {
+	                String nomFichier = fichierPart.getSubmittedFileName();
+	                String contenu = new String(fichierPart.getInputStream().readAllBytes(), "UTF-8");
 
+	                Document doc = new Document();
+	                doc.setTitre(nomFichier.replaceAll("\\.txt$", ""));
+	                doc.setContenu(contenu);
+	                doc.setProprietaireId(u.getId());
+
+	                // Création dans la BDD
+	                int idDoc = new DocumentDao().creerDocument(doc.getTitre(), doc.getContenu(), u.getId());
+	                doc.setId(idDoc);
+	                System.out.println("Document créé avec ID = " + doc.getId());
+
+	                response.sendRedirect("Document?id=" + doc.getId());
+	            } else {
+	                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Fichier manquant");
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de l'import du fichier");
+	        }
+	    }
+	    return;
+	}
 }

@@ -62,7 +62,7 @@ CREATE TABLE `document` (
   PRIMARY KEY (`id`),
   KEY `proprietaire_id` (`proprietaire_id`),
   CONSTRAINT `document_ibfk_1` FOREIGN KEY (`proprietaire_id`) REFERENCES `utilisateur` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,9 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 INSERT INTO `document` VALUES
-(1,'Nouveau Doc','<p>ffff</p><p><br></p><p>flflf</p><p><br></p>',1);
+(1,'Nouveau Doc','<p>ffff</p><p><br></p><p>flflf</p><p><br></p>',1),
+(3,'Nouveau Document','',1),
+(9,'document_test','<p><strong>Ceci est un document de test.</strong></p><p>\r\nVous pouvez ajouter du texte ici pour tester l\'import.\r\nLigne 3 : Lorem ipsum dolor sit amet.\r\n</p>',1);
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -103,6 +105,8 @@ CREATE TABLE `ecriture` (
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `ecriture` WRITE;
 /*!40000 ALTER TABLE `ecriture` DISABLE KEYS */;
+INSERT INTO `ecriture` VALUES
+(3,1);
 /*!40000 ALTER TABLE `ecriture` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -132,6 +136,8 @@ CREATE TABLE `lecture` (
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `lecture` WRITE;
 /*!40000 ALTER TABLE `lecture` DISABLE KEYS */;
+INSERT INTO `lecture` VALUES
+(2,1);
 /*!40000 ALTER TABLE `lecture` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -140,18 +146,35 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 -- Table structure for table `message`
 --
-DROP TABLE IF EXISTS `message`;
 
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `message` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`id_document` int(11) NOT NULL,
-	`id_utilisateur` INT NOT NULL,
-	`message` text NOT NULL,
-	`date_message` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`id`),
-	CONSTRAINT `message_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
-  	CONSTRAINT `message_ibfk_2` FOREIGN KEY (`id_document`) REFERENCES `document` (`id`) ON DELETE CASCADE
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_document` int(11) NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `date_message` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `message_ibfk_1` (`id_utilisateur`),
+  KEY `message_ibfk_2` (`id_document`),
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`id_document`) REFERENCES `document` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `utilisateur`
@@ -164,8 +187,9 @@ CREATE TABLE `utilisateur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +200,10 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `utilisateur` WRITE;
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT INTO `utilisateur` VALUES
-(1,'Adrien','1842');
+(1,'Adrien','1842',1),
+(2,'Subaru','123',0),
+(3,'Test','1234',0),
+(4,'CompteMechant','123',0);
 /*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -191,4 +218,4 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-05-13 19:51:56
+-- Dump completed on 2026-05-18 11:05:31
