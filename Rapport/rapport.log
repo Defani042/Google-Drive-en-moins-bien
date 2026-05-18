@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.16)  18 MAY 2026 15:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.16)  18 MAY 2026 16:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -396,43 +396,54 @@ dvips/cm-super/cm-super-t1.enc}] (./rapport.toc)
 \tf@toc=\write4
 \openout4 = `rapport.toc'.
 
- [2] [3]
-<img/modele.png, id=90, 886.06032pt x 505.89pt>
-File: img/modele.png Graphic file (type png)
-<use img/modele.png>
-Package pdftex.def Info: img/modele.png  used on input line 103.
-(pdftex.def)             Requested size: 427.43153pt x 244.04407pt.
+ [2]
+<img/diagramme dw2.png, id=95, 1866.975pt x 1124.2pt>
+File: img/diagramme dw2.png Graphic file (type png)
+<use img/diagramme dw2.png>
+Package pdftex.def Info: img/diagramme dw2.png  used on input line 52.
+(pdftex.def)             Requested size: 427.43153pt x 257.37694pt.
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 103--104
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 52--53
 [][] 
  []
 
-[4] [5 <./img/modele.png>] (./rapport.aux)
+[3 <./img/diagramme dw2.png (PNG copy)>] [4]
+<img/modele.png, id=105, 925.20656pt x 572.1375pt>
+File: img/modele.png Graphic file (type png)
+<use img/modele.png>
+Package pdftex.def Info: img/modele.png  used on input line 123.
+(pdftex.def)             Requested size: 427.43153pt x 264.32135pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 123--124
+[][] 
+ []
+
+[5 <./img/modele.png>] [6] (./rapport.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 2CCF4857642DC708932CDEF6A1F5391D;2094.
+(rerunfilecheck)             Checksum: 0B2963E002C496A2DA82060B3763760B;2401.
  ) 
 Here is how much of TeX's memory you used:
- 11703 strings out of 474222
- 179139 string characters out of 5748733
- 1931975 words of memory out of 5000000
- 33797 multiletter control sequences out of 15000+600000
+ 11715 strings out of 474222
+ 179390 string characters out of 5748733
+ 1930975 words of memory out of 5000000
+ 33806 multiletter control sequences out of 15000+600000
  571389 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,79p,336b,455s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,6n,79p,339b,456s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/
 fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/c
 m-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1440.pfb
 ></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/f
 onts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfrm2074.pfb>
-Output written on rapport.pdf (5 pages, 201990 bytes).
+Output written on rapport.pdf (6 pages, 496643 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
- 115 compressed objects within 2 object streams
- 20 named destinations out of 1000 (max. 500000)
- 110 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 155 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 23 named destinations out of 1000 (max. 500000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 
